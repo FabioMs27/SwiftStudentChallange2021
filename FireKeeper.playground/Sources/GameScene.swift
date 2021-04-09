@@ -2,16 +2,24 @@ import SpriteKit
 
 public class GameScene: SKScene {
     private let walls = Walls()
-    private lazy var player: Player = {
+    private lazy var player: Player = { [weak self] in
         let player = Player()
         player.position = .zero
+        player.fireEmitter.targetNode = self
         return player
     }()
+    private lazy var aim: Aim = { [player] in
+        let aim = Aim()
+        aim.target = player
+        return aim
+    }()
+    
     
     public override func didMove(to view: SKView) {
         super.didMove(to: view)
         backgroundColor = .black
         setupNodes()
+        aim.position = .zero
     }
     
     public override init(size: CGSize) {
@@ -23,11 +31,26 @@ public class GameScene: SKScene {
     }
     
     private func setupNodes() {
-        walls.position = .zero
         addChild(walls)
         addChild(player)
     }
 }
 
-
-
+public extension GameScene {
+    override func touchesBegan(with event: NSEvent) {
+        let position = event.location(in: self)
+        aim.initialPos = position
+        aim.fadeIn()
+    }
+    
+    override func touchesMoved(with event: NSEvent) {
+        let position = event.location(in: self)
+        aim.currentPos = position
+    }
+    
+    override func touchesEnded(with event: NSEvent) {
+        aim.fadeOut()
+        let angle = aim.angle
+        player.launch(to: angle)
+    }
+}
