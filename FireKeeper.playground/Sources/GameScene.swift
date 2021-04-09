@@ -2,12 +2,16 @@ import SpriteKit
 
 public class GameScene: SKScene {
     private let walls = Walls()
+    private lazy var player: Player = {
+        let player = Player()
+        player.position = .zero
+        return player
+    }()
     
     public override func didMove(to view: SKView) {
         super.didMove(to: view)
-        walls.position = .zero
-        addChild(walls)
-        backgroundColor = .white
+        backgroundColor = .black
+        setupNodes()
     }
     
     public override init(size: CGSize) {
@@ -16,6 +20,12 @@ public class GameScene: SKScene {
     }
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupNodes() {
+        walls.position = .zero
+        addChild(walls)
+        addChild(player)
     }
 }
 
