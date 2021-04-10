@@ -7,6 +7,7 @@ public class Walls: SKNode {
         let rect = CGRect(origin: center, size: size)
         let shape = SKShapeNode(rect: rect)
         shape.fillColor = .clear
+        shape.isHidden = true
         return shape
     }
     private var screen: CGSize {
@@ -39,7 +40,7 @@ public class Walls: SKNode {
     }
     
     private func getPhysics(category: PhysicsCategory) -> SKPhysicsBody {
-        let physicsBody = SKPhysicsBody()
+        let physicsBody = SKPhysicsBody(rectangleOf: wallShape.frame.size)
         physicsBody.isDynamic = false
         physicsBody.categoryBitMask = category.rawValue
         physicsBody.collisionBitMask = PhysicsCategory.player.rawValue
