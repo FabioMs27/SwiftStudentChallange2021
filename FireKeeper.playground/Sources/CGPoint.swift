@@ -8,6 +8,10 @@ public extension CGPoint {
         while radians < 0 {
             radians += CGFloat(2 * Double.pi)
         }
-        return radians + .pi
+        return radians
+    }
+    
+    static func == (lhs: CGPoint, rhs: CGPoint) -> Bool {
+        lhs.x == rhs.x && lhs.y == rhs.y
     }
 }

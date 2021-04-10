@@ -50,7 +50,11 @@ public extension GameScene {
     
     override func touchesEnded(with event: NSEvent) {
         aim.fadeOut()
-        let angle = aim.angle
-        player.launch(to: angle)
+        if aim.currentPos != aim.initialPos {
+            let angle = aim.angle + .pi/2
+            aim.currentPos = .zero
+            aim.initialPos = .zero
+            player.launch(to: angle)
+        }
     }
 }

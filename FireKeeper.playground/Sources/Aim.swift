@@ -18,7 +18,7 @@ public class Aim: SKNode {
         didSet { updateAimingTrail() }
     }
     public var angle: CGFloat {
-        initialPos.angleTo(point: currentPos)
+        initialPos.angleTo(point: currentPos) + .pi
     }
     
     public override init() {
@@ -39,8 +39,7 @@ public class Aim: SKNode {
     
     public func fadeOut() {
         removeAllActions()
-        let fadeAction = SKAction.fadeOut(withDuration: 0.5)
-        run(fadeAction)
+        alpha = 0
     }
     
     private func updateAimingTrail() {

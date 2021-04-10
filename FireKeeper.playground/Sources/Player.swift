@@ -2,7 +2,7 @@ import SpriteKit
 
 public class Player: SKNode {
     
-    private let force: CGFloat = 15
+    private let force: CGFloat = 30
     public lazy var fireEmitter: SKEmitterNode = {
         guard let emitter = SKEmitterNode(fileNamed: "Emitters/Fire.sks") else {
             fatalError("File couldn't load!")
@@ -24,6 +24,7 @@ public class Player: SKNode {
         let physicsBody = SKPhysicsBody(circleOfRadius: 15)
         physicsBody.isDynamic = true
         physicsBody.affectedByGravity = true
+        physicsBody.allowsRotation = false
         physicsBody.categoryBitMask = PhysicsCategory.player.rawValue
         physicsBody.collisionBitMask = PhysicsCategory.wall.rawValue | PhysicsCategory.floor.rawValue
         physicsBody.contactTestBitMask = PhysicsCategory.wall.rawValue | PhysicsCategory.floor.rawValue | PhysicsCategory.powerUp.rawValue
@@ -31,7 +32,10 @@ public class Player: SKNode {
     }
     
     public func launch(to angle: CGFloat) {
-        physicsBody?.applyImpulse(CGVector(dx: 0, dy: force))
+        physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+        let xForce = force * sin(angle)
+        let yForce = -force * cos(angle)
+        physicsBody?.applyImpulse(CGVector(dx: xForce, dy: yForce))
     }
 }
 
