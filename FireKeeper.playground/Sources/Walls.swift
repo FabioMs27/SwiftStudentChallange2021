@@ -42,6 +42,8 @@ public class Walls: SKNode {
     private func getPhysics(category: PhysicsCategory) -> SKPhysicsBody {
         let physicsBody = SKPhysicsBody(rectangleOf: wallShape.frame.size)
         physicsBody.isDynamic = false
+        physicsBody.friction = 1
+        physicsBody.restitution = category == .floor ? 0 : 1
         physicsBody.categoryBitMask = category.rawValue
         physicsBody.collisionBitMask = PhysicsCategory.player.rawValue
         physicsBody.contactTestBitMask = category == .floor ? PhysicsCategory.player.rawValue : PhysicsCategory.none.rawValue

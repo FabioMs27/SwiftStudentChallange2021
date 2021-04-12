@@ -25,6 +25,8 @@ public class Player: SKNode {
         physicsBody.isDynamic = true
         physicsBody.affectedByGravity = true
         physicsBody.allowsRotation = false
+        physicsBody.friction = 1
+        physicsBody.restitution = 0
         physicsBody.categoryBitMask = PhysicsCategory.player.rawValue
         physicsBody.collisionBitMask = PhysicsCategory.wall.rawValue | PhysicsCategory.floor.rawValue
         physicsBody.contactTestBitMask = PhysicsCategory.wall.rawValue | PhysicsCategory.floor.rawValue | PhysicsCategory.powerUp.rawValue
