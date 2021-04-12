@@ -1,9 +1,11 @@
 import SpriteKit
+import GameplayKit
 
 public class GameScene: SKScene {
     private let walls = Walls()
     private lazy var player: Player = { [weak self] in
         let player = Player()
+        let stateMachine = GKStateMachine(states: [])
         player.position = .zero
         player.fireEmitter.targetNode = self
         return player
@@ -24,7 +26,8 @@ public class GameScene: SKScene {
     
     public override init(size: CGSize) {
         super.init(size: size)
-        anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        anchorPoint = Metrics.anchorPoint
+        physicsWorld.gravity = Metrics.gravity
     }
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

@@ -1,8 +1,11 @@
 import SpriteKit
+import GameplayKit
 
 public class Player: SKNode {
     
+    private var stateMachine: GKStateMachine?
     private let force: CGFloat = 30
+    
     public lazy var fireEmitter: SKEmitterNode = {
         guard let emitter = SKEmitterNode(fileNamed: "Emitters/Fire.sks") else {
             fatalError("File couldn't load!")
