@@ -5,7 +5,10 @@ public class GameScene: SKScene {
     private let walls = Walls()
     private lazy var player: Player = { [weak self] in
         let player = Player()
-        let stateMachine = GKStateMachine(states: [])
+        let stateMachine = GKStateMachine(states: [
+            Launch(player)
+        ])
+        player.stateMachine = stateMachine
         player.position = .zero
         player.fireEmitter.targetNode = self
         return player
@@ -55,9 +58,10 @@ public extension GameScene {
         aim.fadeOut()
         if aim.currentPos != aim.initialPos {
             let angle = aim.angle + .pi/2
+            player.launchAngle = angle
             aim.currentPos = .zero
             aim.initialPos = .zero
-            player.launch(to: angle)
+            player.enter(state: Launch.self)
         }
     }
 }

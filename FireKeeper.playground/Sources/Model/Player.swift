@@ -3,8 +3,9 @@ import GameplayKit
 
 public class Player: SKNode {
     
-    private var stateMachine: GKStateMachine?
-    private let force: CGFloat = 30
+    public var stateMachine: GKStateMachine?
+    public let force: CGFloat = 30
+    public var launchAngle: CGFloat = 0
     
     public lazy var fireEmitter: SKEmitterNode = {
         guard let emitter = SKEmitterNode(fileNamed: "Emitters/Fire.sks") else {
@@ -36,11 +37,13 @@ public class Player: SKNode {
         self.physicsBody = physicsBody
     }
     
+    public func enter(state: AnyClass) {
+        stateMachine?.enter(state)
+        print(stateMachine?.enter(state))
+    }
+    
     public func launch(to angle: CGFloat) {
-        physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-        let xForce = force * sin(angle)
-        let yForce = -force * cos(angle)
-        physicsBody?.applyImpulse(CGVector(dx: xForce, dy: yForce))
+        
     }
 }
 
