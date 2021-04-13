@@ -39,7 +39,6 @@ public class Player: SKNode {
     
     public func enter(state: AnyClass) {
         stateMachine?.enter(state)
-        print(stateMachine?.enter(state))
     }
     
     public func launch(to angle: CGFloat) {

@@ -2,7 +2,9 @@ import SpriteKit
 import GameplayKit
 
 public class GameScene: SKScene {
+    private let cameraNode = SKCameraNode()
     private let walls = Walls()
+    private let powerUpSpawner = PowerUpSpawn()
     private lazy var player: Player = { [weak self] in
         let player = Player()
         let stateMachine = GKStateMachine(states: [
@@ -31,6 +33,7 @@ public class GameScene: SKScene {
         super.init(size: size)
         anchorPoint = Metrics.anchorPoint
         physicsWorld.gravity = Metrics.gravity
+        camera = cameraNode
     }
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -39,6 +42,7 @@ public class GameScene: SKScene {
     private func setupNodes() {
         addChild(walls)
         addChild(player)
+        addChild(powerUpSpawner)
     }
 }
 
