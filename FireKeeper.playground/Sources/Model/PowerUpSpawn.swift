@@ -29,7 +29,6 @@ public class PowerUpSpawn: SKNode {
         guard let emitter = SKEmitterNode(fileNamed: "Emitters/Burst.sks") else {
             fatalError("Couldn't load file!")
         }
-        emitter.physicsBody = getPhysics()
         return emitter
     }
     
@@ -58,16 +57,13 @@ public class PowerUpSpawn: SKNode {
     }
     
     private func spawnPowerUp(at point: CGPoint) {
-        guard
-            children.count <= PUSettings.maxOnScreen,
-            let powerUp = powerUpStack.popLast() else {
-            return
-        }
+        if children.count >= PUSettings.maxOnScreen, powerUpStack.isEmpty { return }
+        let powerUp = powerUpStack.removeFirst()
         powerUp.position = point
-
         let finalPos = CGVector(dx: 0, dy: -Metrics.screenSize.height * 2)
         let fallAction: SKAction = .move(by: finalPos, duration: PUSettings.fallSpeed)
-        powerUp.removeFromParent()
+        powerUp.isHidden = false
+        powerUp.physicsBody = getPhysics()
         addChild(powerUp)
         powerUp.run(fallAction) { [weak self] in
             print("Cabou")

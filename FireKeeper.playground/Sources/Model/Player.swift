@@ -41,8 +41,13 @@ public class Player: SKNode {
         stateMachine?.enter(state)
     }
     
-    public func launch(to angle: CGFloat) {
-        
+    public func collectPowerUp() {
+        physicsBody?.allContactedBodies()
+            .map { $0.node as? SKEmitterNode }
+            .forEach {
+                $0?.isHidden = true
+                $0?.physicsBody = nil
+            }
     }
 }
 

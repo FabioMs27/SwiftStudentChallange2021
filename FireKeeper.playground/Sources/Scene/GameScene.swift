@@ -33,6 +33,7 @@ public class GameScene: SKScene {
         super.init(size: size)
         anchorPoint = Metrics.anchorPoint
         physicsWorld.gravity = Metrics.gravity
+        physicsWorld.contactDelegate = self
         camera = cameraNode
     }
     public required init?(coder aDecoder: NSCoder) {
@@ -46,6 +47,7 @@ public class GameScene: SKScene {
     }
 }
 
+//MARK: -Touch handling
 public extension GameScene {
     override func touchesBegan(with event: NSEvent) {
         let position = event.location(in: self)
@@ -66,6 +68,27 @@ public extension GameScene {
             aim.currentPos = .zero
             aim.initialPos = .zero
             player.enter(state: Launch.self)
+        }
+    }
+}
+
+//MARK: -Physics Handling
+extension GameScene: SKPhysicsContactDelegate {
+    public func didBegin(_ contact: SKPhysicsContact) {
+        guard
+            let physicsA = contact.bodyA.node?.physicsBody,
+            let physicsB = contact.bodyB.node?.physicsBody else {
+            return
+        }
+        
+        let physics: [PhysicsCategory] = [
+            PhysicsCategory(rawValue: physicsA.categoryBitMask) ?? .none,
+            PhysicsCategory(rawValue: physicsB.categoryBitMask) ?? .none
+        ]
+        
+        if physics.contains(.powerUp), physics.contains(.player) {
+            player.collectPowerUp()
+            print("Coletou")
         }
     }
 }
