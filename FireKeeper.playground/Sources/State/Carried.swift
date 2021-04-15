@@ -1,8 +1,15 @@
 import GameplayKit
 
-class Carried: PlayerState {    
+class Carried: PlayerState {
     override func didEnter(from previousState: GKState?) {
         print("You are being carried and loosing life")
+        player.burn()
+    }
+    
+    override func willExit(to nextState: GKState) {
+        if !nextState.isMember(of: Aiming.self) {
+            player.endBurning()
+        }
     }
     
     override func update(deltaTime seconds: TimeInterval) {

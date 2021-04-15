@@ -18,6 +18,7 @@ public class GameScene: SKScene {
         player.stateMachine = stateMachine
         player.position = .zero
         player.fireEmitter.targetNode = self
+        player.burnEmitter.targetNode = self
         return player
     }()
     public lazy var aim: Aim = { [player] in

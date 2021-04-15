@@ -58,10 +58,22 @@ public class Player: SKNode {
         return emitter
     }()
     
+    public lazy var burnEmitter: SKEmitterNode = { [weak self] in
+        guard let emitter = SKEmitterNode(fileNamed: "Emitters/Burning.sks") else {
+            fatalError("Couldn't load file!")
+        }
+        self?.burningRate = emitter.particleBirthRate
+        return emitter
+    }()
+    
+    private var burningRate: CGFloat = 0
+    
     public override init() {
         super.init()
         addPhysics()
         addChild(fireEmitter)
+        addChild(burnEmitter)
+        endBurning()
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -94,6 +106,14 @@ public class Player: SKNode {
                 $0?.physicsBody = nil
                 clampedEnergy += PUSettings.fireEnergy
             }
+    }
+    
+    public func burn() {
+        burnEmitter.particleBirthRate = burningRate
+    }
+    
+    public func endBurning() {
+        burnEmitter.particleBirthRate = 0
     }
     
     private func updateFireStrength() {

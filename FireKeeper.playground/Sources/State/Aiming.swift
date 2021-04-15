@@ -15,6 +15,7 @@ class Aiming: PlayerState {
         aim.removeAllActions()
         aim.alpha = 0
         endSlowMotion()
+        player.endBurning()
     }
     
     override func update(deltaTime seconds: TimeInterval) {
