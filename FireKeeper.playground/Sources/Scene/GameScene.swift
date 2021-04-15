@@ -5,17 +5,22 @@ public class GameScene: SKScene {
     private let cameraNode = SKCameraNode()
     private let walls = Walls()
     private let powerUpSpawner = PowerUpSpawn()
-    private lazy var player: Player = { [weak self] in
+    public lazy var player: Player = { [weak self] in
+        guard let self = self else { fatalError() }
         let player = Player()
         let stateMachine = GKStateMachine(states: [
-            Launch(player)
+            Launch(self), Finished(self),
+            Aiming(self), Carried(self),
+            Collected(self), Falling(self),
+            Start(self)
         ])
+        stateMachine.enter(Start.self)
         player.stateMachine = stateMachine
         player.position = .zero
         player.fireEmitter.targetNode = self
         return player
     }()
-    private lazy var aim: Aim = { [player] in
+    public lazy var aim: Aim = { [player] in
         let aim = Aim()
         aim.target = player
         return aim
@@ -52,22 +57,21 @@ public extension GameScene {
     override func touchesBegan(with event: NSEvent) {
         let position = event.location(in: self)
         aim.initialPos = position
-        aim.fadeIn()
     }
     
     override func touchesMoved(with event: NSEvent) {
         let position = event.location(in: self)
         aim.currentPos = position
+        player.enter(state: .aiming)
     }
     
     override func touchesEnded(with event: NSEvent) {
-        aim.fadeOut()
         if aim.currentPos != aim.initialPos {
             let angle = aim.angle + .pi/2
             player.launchAngle = angle
             aim.currentPos = .zero
             aim.initialPos = .zero
-            player.enter(state: Launch.self)
+            player.enter(state: .launch)
         }
     }
 }
@@ -87,8 +91,18 @@ extension GameScene: SKPhysicsContactDelegate {
         ]
         
         if physics.contains(.powerUp), physics.contains(.player) {
-            player.collectPowerUp()
-            print("Coletou")
+            player.enter(state: .collected)
         }
+        
+        if physics.contains(.floor), physics.contains(.player) {
+            player.enter(state: .carried)
+        }
+    }
+}
+
+//MARK: -Update
+extension GameScene {
+    public override func update(_ currentTime: TimeInterval) {
+        player.stateMachine?.currentState?.update(deltaTime: currentTime)
     }
 }

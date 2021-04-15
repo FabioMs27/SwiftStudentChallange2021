@@ -31,17 +31,6 @@ public class Aim: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func fadeIn() {
-        removeAllActions()
-        let fadeAction = SKAction.fadeAlpha(to: 1, duration: 0.5)
-        run(fadeAction)
-    }
-    
-    public func fadeOut() {
-        removeAllActions()
-        alpha = 0
-    }
-    
     private func updateAimingTrail() {
         zRotation = angle
     }

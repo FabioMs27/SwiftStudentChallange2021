@@ -1,10 +1,11 @@
 import SpriteKit
 
-fileprivate enum PUSettings {
+public enum PUSettings {
     static let stackMax = 5
     static let coolDownTime: TimeInterval = 4
     static let maxOnScreen = 2
     static let fallSpeed: TimeInterval = 10
+    static let fireEnergy: CGFloat = 90
 }
 
 public class PowerUpSpawn: SKNode {
@@ -66,7 +67,6 @@ public class PowerUpSpawn: SKNode {
         powerUp.physicsBody = getPhysics()
         addChild(powerUp)
         powerUp.run(fallAction) { [weak self] in
-            print("Cabou")
             self?.powerUpStack.append(powerUp)
             powerUp.removeFromParent()
         }
