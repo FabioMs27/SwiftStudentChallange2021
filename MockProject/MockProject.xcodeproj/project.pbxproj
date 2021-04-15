@@ -17,6 +17,7 @@
 		790849A6261F422500E0159D /* Aim.sks in Resources */ = {isa = PBXBuildFile; fileRef = 790849A5261F422500E0159D /* Aim.sks */; };
 		791669702624B3B400076D92 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7916696E2624B3B400076D92 /* Assets.xcassets */; };
 		791669742624B7B100076D92 /* Burst.sks in Resources */ = {isa = PBXBuildFile; fileRef = 791669732624B7B100076D92 /* Burst.sks */; };
+		79A58B962628A9F90008D27D /* Fog.sks in Resources */ = {isa = PBXBuildFile; fileRef = 79A58B952628A9F90008D27D /* Fog.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		790849A5261F422500E0159D /* Aim.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Aim.sks; sourceTree = "<group>"; };
 		7916696E2624B3B400076D92 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		791669732624B7B100076D92 /* Burst.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Burst.sks; sourceTree = "<group>"; };
+		79A58B952628A9F90008D27D /* Fog.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Fog.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +77,7 @@
 				790849A5261F422500E0159D /* Aim.sks */,
 				7916696E2624B3B400076D92 /* Assets.xcassets */,
 				791669732624B7B100076D92 /* Burst.sks */,
+				79A58B952628A9F90008D27D /* Fog.sks */,
 			);
 			path = MockProject;
 			sourceTree = "<group>";
@@ -138,6 +141,7 @@
 			files = (
 				79084998261F3E5700E0159D /* Main.storyboard in Resources */,
 				7908498F261F3E5700E0159D /* GameScene.sks in Resources */,
+				79A58B962628A9F90008D27D /* Fog.sks in Resources */,
 				790849A6261F422500E0159D /* Aim.sks in Resources */,
 				791669702624B3B400076D92 /* Assets.xcassets in Resources */,
 				790849A3261F3E9900E0159D /* Fire.sks in Resources */,

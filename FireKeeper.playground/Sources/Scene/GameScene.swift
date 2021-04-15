@@ -25,6 +25,18 @@ public class GameScene: SKScene {
         aim.target = player
         return aim
     }()
+    public lazy var backgroundEmitter: SKEmitterNode = {
+        guard let emitter = SKEmitterNode(fileNamed: "Emitters/Fog.sks") else {
+            fatalError("Couldn't load file!")
+        }
+        emitter.particlePositionRange = CGVector(
+            dx: Metrics.screenSize.width,
+            dy: 0
+        )
+        emitter.particlePosition.y = Metrics.screenSize.height * 0.8
+        emitter.advanceSimulationTime(5)
+        return emitter
+    }()
     
     
     public override func didMove(to view: SKView) {
@@ -49,6 +61,7 @@ public class GameScene: SKScene {
         addChild(walls)
         addChild(player)
         addChild(powerUpSpawner)
+        addChild(backgroundEmitter)
     }
 }
 
