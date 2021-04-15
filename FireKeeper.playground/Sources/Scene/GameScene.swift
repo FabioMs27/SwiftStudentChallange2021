@@ -26,6 +26,12 @@ public class GameScene: SKScene {
         aim.target = player
         return aim
     }()
+    public lazy var backgroundNode: SKSpriteNode = {
+        let node = SKSpriteNode(color: .black, size: size)
+        node.lightingBitMask = 0b0001
+        return node
+    }()
+    
     public lazy var backgroundEmitter: SKEmitterNode = {
         guard let emitter = SKEmitterNode(fileNamed: "Emitters/Fog.sks") else {
             fatalError("Couldn't load file!")
@@ -59,10 +65,11 @@ public class GameScene: SKScene {
     }
     
     private func setupNodes() {
-        addChild(walls)
-        addChild(player)
-        addChild(powerUpSpawner)
-        addChild(backgroundEmitter)
+        backgroundNode.addChild(walls)
+        backgroundNode.addChild(player)
+        backgroundNode.addChild(powerUpSpawner)
+        backgroundNode.addChild(backgroundEmitter)
+        addChild(backgroundNode)
     }
 }
 

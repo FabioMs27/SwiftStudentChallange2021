@@ -66,6 +66,13 @@ public class Player: SKNode {
         return emitter
     }()
     
+    public lazy var fireLight: SKLightNode = {
+        let lightNode = SKLightNode()
+        lightNode.categoryBitMask = 0b0001
+        lightNode.lightColor = .white
+        return lightNode
+    }()
+    
     private var burningRate: CGFloat = 0
     
     public override init() {
@@ -73,6 +80,7 @@ public class Player: SKNode {
         addPhysics()
         addChild(fireEmitter)
         addChild(burnEmitter)
+        addChild(fireLight)
         endBurning()
     }
     

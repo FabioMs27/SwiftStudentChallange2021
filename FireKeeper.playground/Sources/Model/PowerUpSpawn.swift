@@ -30,6 +30,10 @@ public class PowerUpSpawn: SKNode {
         guard let emitter = SKEmitterNode(fileNamed: "Emitters/Burst.sks") else {
             fatalError("Couldn't load file!")
         }
+        let lightNode = SKLightNode()
+        lightNode.categoryBitMask = 0b0001
+        lightNode.lightColor = .white
+        emitter.addChild(lightNode)
         return emitter
     }
     
