@@ -17,6 +17,12 @@ class Aiming: PlayerState {
         endSlowMotion()
     }
     
+    override func update(deltaTime seconds: TimeInterval) {
+        if player.isGrounded {
+            player.clampedEnergy -= energyLossrRate
+        }
+    }
+    
     override func isValidNextState(_ stateClass: AnyClass) -> Bool {
         stateClass is Launch.Type ||
             stateClass is Carried.Type
