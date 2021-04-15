@@ -12,13 +12,13 @@ public enum PlayerStates {
     
     public var classType: AnyClass {
         switch self {
-        case .carried: return Carried.self
+        case .carried:   return Carried.self
         case .collected: return Collected.self
-        case .falling: return Falling.self
-        case .finished: return Finished.self
-        case .launch: return Launch.self
-        case .start: return Start.self
-        case .aiming: return Aiming.self
+        case .falling:   return Falling.self
+        case .finished:  return Finished.self
+        case .launch:    return Launch.self
+        case .start:     return Start.self
+        case .aiming:    return Aiming.self
         }
     }
 }
@@ -30,13 +30,19 @@ public class Player: SKNode {
     public let maxEnergy: CGFloat = 100
     public let launchEnergy: CGFloat = 5
     public var launchAngle: CGFloat = 0
-    public var energySetter: CGFloat {
+    public var clampedEnergy: CGFloat {
         set {
-            energy = newValue >= maxEnergy ? maxEnergy : newValue <= launchEnergy ? launchEnergy : newValue
+            if newValue >= maxEnergy {
+                energy = maxEnergy
+            } else if newValue <= launchEnergy {
+                energy = launchEnergy
+            } else {
+                energy = newValue
+            }
         }
         get { energy }
     }
-    private var energy: CGFloat = 10 {
+    public var energy: CGFloat = 10 {
         didSet { updateFireStrength() }
     }
     public var isGrounded: Bool {
@@ -86,7 +92,7 @@ public class Player: SKNode {
             .forEach {
                 $0?.isHidden = true
                 $0?.physicsBody = nil
-                energySetter += PUSettings.fireEnergy
+                clampedEnergy += PUSettings.fireEnergy
             }
     }
     

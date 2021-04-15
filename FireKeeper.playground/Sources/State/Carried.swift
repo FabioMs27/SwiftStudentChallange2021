@@ -10,7 +10,7 @@ class Carried: PlayerState {
     }
     
     override func update(deltaTime seconds: TimeInterval) {
-        player.energySetter -= energyLossrRate
+        player.clampedEnergy -= energyLossrRate
     }
     
     override func isValidNextState(_ stateClass: AnyClass) -> Bool {
