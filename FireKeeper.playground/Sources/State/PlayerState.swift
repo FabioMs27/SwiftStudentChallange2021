@@ -30,6 +30,7 @@ class PlayerState: GKState {
             scene.childrenRecursively
                 .forEach { $0.speed = finalValue }
         }
+        
     }
     
     func endSlowMotion() {
