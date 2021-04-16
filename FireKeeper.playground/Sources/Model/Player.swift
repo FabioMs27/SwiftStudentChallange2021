@@ -87,17 +87,6 @@ public class Player: SKNode {
         stateMachine?.enter(state.classType)
     }
     
-    public func collectPowerUp() {
-        physicsBody?.allContactedBodies()
-            .map { $0.node as? SKEmitterNode }
-            .filter { $0 != nil }
-            .forEach {
-                $0?.isHidden = true
-                $0?.physicsBody = nil
-                clampedEnergy += PUSettings.fireEnergy
-            }
-    }
-    
     public func burn() {
         burnEmitter.particleBirthRate = burningRate
     }
@@ -116,7 +105,6 @@ public class Player: SKNode {
         fireEmitter.particleBirthRate = fireSettings.birthRate
         fireEmitter.particleColor = color
         lastColor = fireSettings.color
-        print(color)
     }
 }
 

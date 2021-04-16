@@ -4,7 +4,7 @@ import GameplayKit
 public class GameScene: SKScene {
     private let cameraNode = SKCameraNode()
     private let walls = Walls()
-    private let powerUpSpawner = PowerUpSpawn()
+    public let powerUpSpawner = PowerUpSpawn()
     public lazy var player: Player = { [weak self] in
         guard let self = self else { fatalError() }
         let player = Player()
