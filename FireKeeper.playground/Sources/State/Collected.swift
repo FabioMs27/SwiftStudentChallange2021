@@ -7,7 +7,6 @@ class Collected: PlayerState {
             .filter { $0 != nil }
             .forEach {
                 collect(fire: $0)
-                player.clampedEnergy += PUSettings.fireEnergy
             }
     }
     
@@ -21,8 +20,7 @@ class Collected: PlayerState {
 
 extension Collected {
     func collect(fire: SKEmitterNode?) {
-        guard let emitter = fire,
-              let oldParent = emitter.parent else {
+        guard let emitter = fire else {
             return
         }
         emitter.physicsBody = nil
@@ -36,6 +34,7 @@ extension Collected {
         player.addChild(spinningNode)
         emitter.move(toParent: spinningNode)
         emitter.targetNode = player.parent
+        emitter.removeAllActions()
         
         //Node will spin to make emitter spin
         let spinAction: SKAction = .rotate(byAngle: .pi, duration: spinSpeed)
@@ -57,17 +56,23 @@ extension Collected {
         //Emitter will go to center of the player while spinning and shrinking
         let scaleAction: SKAction = .scale(to: 0, duration: goToCenterDuration)
         let goToCenter: SKAction = .move(to: .zero, duration: goToCenterDuration)
-        let finishAnimation: SKAction = .run { [scene] in
-            emitter.particleBirthRate = 0
-            emitter.move(toParent: oldParent)
+        let finishAnimation: SKAction = .run { [player] in
+            player.clampedEnergy += PUSettings.fireEnergy
+            //TO-DO: Burst from collecting
+        }
+        let waitForParticlesToEnd: SKAction = .wait(forDuration: TimeInterval(emitter.particleLifetime))
+        let endEmitter: SKAction = .run { [scene] in
+            emitter.removeFromParent()
+            emitter.removeAllActions()
+            scene.powerUpSpawner.powerUpStack.append(emitter)
             spinningNode.removeAllActions()
             spinningNode.removeFromParent()
-            scene.powerUpSpawner.powerUpStack.append(emitter)
-            emitter.removeAllActions()
-            emitter.removeFromParent()
         }
         let goToCenterGroup: SKAction = .group([scaleAction, goToCenter])
-        let goToCenterSequence: SKAction = .sequence([goToCenterGroup, finishAnimation])
+        let goToCenterSequence: SKAction = .sequence([goToCenterGroup,
+                                                      finishAnimation,
+                                                      waitForParticlesToEnd,
+                                                      endEmitter])
         
         let actionSequence: SKAction = .sequence([goToSpinningNodeSequence, goToCenterSequence])
         emitter.run(actionSequence)

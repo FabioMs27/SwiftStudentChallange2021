@@ -6,7 +6,6 @@ public enum PUSettings {
     static let maxOnScreen = 2
     static let fallSpeed: TimeInterval = 10
     static let fireEnergy: CGFloat = 90
-    static var fireBirthRate = CGFloat()
 }
 
 public class PowerUpSpawn: SKNode {
@@ -15,7 +14,6 @@ public class PowerUpSpawn: SKNode {
         for _ in 0...PUSettings.stackMax {
             stack.append(getPowerUp())
         }
-        PUSettings.fireBirthRate = stack.first?.particleBirthRate ?? 0
         return stack
     }()
     
@@ -72,7 +70,6 @@ public class PowerUpSpawn: SKNode {
         let fallAction: SKAction = .move(by: finalPos, duration: PUSettings.fallSpeed)
         powerUp.setScale(1)
         powerUp.isHidden = false
-        powerUp.particleBirthRate = PUSettings.fireBirthRate
         powerUp.physicsBody = getPhysics()
         addChild(powerUp)
         powerUp.removeAllActions()
