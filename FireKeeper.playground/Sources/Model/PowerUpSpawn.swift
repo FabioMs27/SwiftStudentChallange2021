@@ -9,7 +9,7 @@ public enum PUSettings {
 }
 
 public class PowerUpSpawn: SKNode {
-    private lazy var powerUpStack: [SKEmitterNode] = { [getPowerUp] in
+    public lazy var powerUpStack: [SKEmitterNode] = { [getPowerUp] in
         var stack = [SKEmitterNode]()
         for _ in 0...PUSettings.stackMax {
             stack.append(getPowerUp())
@@ -30,6 +30,10 @@ public class PowerUpSpawn: SKNode {
         guard let emitter = SKEmitterNode(fileNamed: "Emitters/Burst.sks") else {
             fatalError("Couldn't load file!")
         }
+        let lightNode = SKLightNode()
+        lightNode.categoryBitMask = 0b0001
+        lightNode.lightColor = .white
+        emitter.addChild(lightNode)
         return emitter
     }
     
@@ -61,11 +65,14 @@ public class PowerUpSpawn: SKNode {
         if children.count >= PUSettings.maxOnScreen, powerUpStack.isEmpty { return }
         let powerUp = powerUpStack.removeFirst()
         powerUp.position = point
+        powerUp.targetNode = parent
         let finalPos = CGVector(dx: 0, dy: -Metrics.screenSize.height * 2)
         let fallAction: SKAction = .move(by: finalPos, duration: PUSettings.fallSpeed)
+        powerUp.setScale(1)
         powerUp.isHidden = false
         powerUp.physicsBody = getPhysics()
         addChild(powerUp)
+        powerUp.removeAllActions()
         powerUp.run(fallAction) { [weak self] in
             self?.powerUpStack.append(powerUp)
             powerUp.removeFromParent()

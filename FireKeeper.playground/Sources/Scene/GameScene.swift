@@ -4,7 +4,7 @@ import GameplayKit
 public class GameScene: SKScene {
     private let cameraNode = SKCameraNode()
     private let walls = Walls()
-    private let powerUpSpawner = PowerUpSpawn()
+    public let powerUpSpawner = PowerUpSpawn()
     public lazy var player: Player = { [weak self] in
         guard let self = self else { fatalError() }
         let player = Player()
@@ -18,12 +18,31 @@ public class GameScene: SKScene {
         player.stateMachine = stateMachine
         player.position = .zero
         player.fireEmitter.targetNode = self
+        player.burnEmitter.targetNode = self
         return player
     }()
     public lazy var aim: Aim = { [player] in
         let aim = Aim()
         aim.target = player
         return aim
+    }()
+    public lazy var backgroundNode: SKSpriteNode = {
+        let node = SKSpriteNode(color: .black, size: size)
+        node.lightingBitMask = 0b0001
+        return node
+    }()
+    
+    public lazy var backgroundEmitter: SKEmitterNode = {
+        guard let emitter = SKEmitterNode(fileNamed: "Emitters/Fog.sks") else {
+            fatalError("Couldn't load file!")
+        }
+        emitter.particlePositionRange = CGVector(
+            dx: Metrics.screenSize.width,
+            dy: 0
+        )
+        emitter.particlePosition.y = Metrics.screenSize.height * 0.8
+        emitter.advanceSimulationTime(5)
+        return emitter
     }()
     
     
@@ -46,9 +65,11 @@ public class GameScene: SKScene {
     }
     
     private func setupNodes() {
-        addChild(walls)
-        addChild(player)
-        addChild(powerUpSpawner)
+        backgroundNode.addChild(walls)
+        backgroundNode.addChild(player)
+        backgroundNode.addChild(powerUpSpawner)
+        backgroundNode.addChild(backgroundEmitter)
+        addChild(backgroundNode)
     }
 }
 

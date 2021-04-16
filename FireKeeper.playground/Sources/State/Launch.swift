@@ -11,11 +11,15 @@ class Launch: PlayerState {
     let launchCoolDown: Double = 1
         
     override func didEnter(from previousState: GKState?) {
+        if player.energy < player.launchEnergy {
+            player.enter(state: .falling)
+            return
+        }
         player.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
         let xForce = force * sin(angle)
         let yForce = -force * cos(angle)
         player.physicsBody?.applyImpulse(CGVector(dx: xForce, dy: yForce))
-        player.energySetter -= player.launchEnergy
+        player.energy -= player.launchEnergy
         
         let waitForLaunch: SKAction = .wait(forDuration: launchCoolDown)
         player.run(waitForLaunch) { [player] in
@@ -25,6 +29,7 @@ class Launch: PlayerState {
     
     override func isValidNextState(_ stateClass: AnyClass) -> Bool {
         stateClass is Falling.Type ||
-            stateClass is Collected.Type
+            stateClass is Collected.Type ||
+            stateClass is Aiming.Type
     }
 }
