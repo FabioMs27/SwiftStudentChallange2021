@@ -45,6 +45,22 @@ public class GameScene: SKScene {
         return emitter
     }()
     
+    public lazy var initialTouchNode: SKShapeNode = {
+        let shape = SKShapeNode(circleOfRadius: 8)
+        shape.alpha = 0
+        shape.fillColor = .white
+        addChild(shape)
+        return shape
+    }()
+    
+    public lazy var currentTouchNode: SKShapeNode = {
+        let shape = SKShapeNode(circleOfRadius: 16)
+        shape.alpha = 0
+        shape.fillColor = .white
+        addChild(shape)
+        return shape
+    }()
+    
     
     public override func didMove(to view: SKView) {
         super.didMove(to: view)
@@ -78,12 +94,14 @@ public extension GameScene {
     override func touchesBegan(with event: NSEvent) {
         let position = event.location(in: self)
         aim.initialPos = position
+        initialTouchNode.position = position
     }
     
     override func touchesMoved(with event: NSEvent) {
         let position = event.location(in: self)
         aim.currentPos = position
         player.enter(state: .aiming)
+        currentTouchNode.position = position
     }
     
     override func touchesEnded(with event: NSEvent) {
