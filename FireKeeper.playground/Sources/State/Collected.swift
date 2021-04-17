@@ -54,22 +54,22 @@ extension Collected {
         let goToSpinningNodeSequence: SKAction = .sequence([goToSpinningNode, enterSpinningNode])
         
         //Emitter will go to center of the player while spinning and shrinking
-        let scaleAction: SKAction = .scale(to: 0, duration: goToCenterDuration)
         let goToCenter: SKAction = .move(to: .zero, duration: goToCenterDuration)
         let finishAnimation: SKAction = .run { [player] in
             player.clampedEnergy += PUSettings.fireEnergy
+            emitter.particleBirthRate = 0
             //TO-DO: Burst from collecting
         }
         let waitForParticlesToEnd: SKAction = .wait(forDuration: TimeInterval(emitter.particleLifetime))
         let endEmitter: SKAction = .run { [scene] in
+            emitter.targetNode = nil
             emitter.removeFromParent()
             emitter.removeAllActions()
             scene.powerUpSpawner.powerUpStack.append(emitter)
             spinningNode.removeAllActions()
             spinningNode.removeFromParent()
         }
-        let goToCenterGroup: SKAction = .group([scaleAction, goToCenter])
-        let goToCenterSequence: SKAction = .sequence([goToCenterGroup,
+        let goToCenterSequence: SKAction = .sequence([goToCenter,
                                                       finishAnimation,
                                                       waitForParticlesToEnd,
                                                       endEmitter])

@@ -66,9 +66,9 @@ public class PowerUpSpawn: SKNode {
         let powerUp = powerUpStack.removeFirst()
         powerUp.position = point
         powerUp.targetNode = parent
+        powerUp.particleBirthRate = 50
         let finalPos = CGVector(dx: 0, dy: -Metrics.screenSize.height * 2)
         let fallAction: SKAction = .move(by: finalPos, duration: PUSettings.fallSpeed)
-        powerUp.setScale(1)
         powerUp.isHidden = false
         powerUp.physicsBody = getPhysics()
         addChild(powerUp)
