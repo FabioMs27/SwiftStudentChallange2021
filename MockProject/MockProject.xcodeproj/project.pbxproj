@@ -17,6 +17,8 @@
 		790849A6261F422500E0159D /* Aim.sks in Resources */ = {isa = PBXBuildFile; fileRef = 790849A5261F422500E0159D /* Aim.sks */; };
 		791669702624B3B400076D92 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7916696E2624B3B400076D92 /* Assets.xcassets */; };
 		791669742624B7B100076D92 /* Burst.sks in Resources */ = {isa = PBXBuildFile; fileRef = 791669732624B7B100076D92 /* Burst.sks */; };
+		791F0BAC262B4B910027D3C0 /* Collected.sks in Resources */ = {isa = PBXBuildFile; fileRef = 791F0BAB262B4B900027D3C0 /* Collected.sks */; };
+		791F0BAF262B56BB0027D3C0 /* Jump.sks in Resources */ = {isa = PBXBuildFile; fileRef = 791F0BAE262B56BB0027D3C0 /* Jump.sks */; };
 		79A58B962628A9F90008D27D /* Fog.sks in Resources */ = {isa = PBXBuildFile; fileRef = 79A58B952628A9F90008D27D /* Fog.sks */; };
 		79A58B9A2628B2540008D27D /* LosingEnergy.sks in Resources */ = {isa = PBXBuildFile; fileRef = 79A58B992628B2540008D27D /* LosingEnergy.sks */; };
 /* End PBXBuildFile section */
@@ -34,6 +36,8 @@
 		790849A5261F422500E0159D /* Aim.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Aim.sks; sourceTree = "<group>"; };
 		7916696E2624B3B400076D92 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		791669732624B7B100076D92 /* Burst.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Burst.sks; sourceTree = "<group>"; };
+		791F0BAB262B4B900027D3C0 /* Collected.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Collected.sks; sourceTree = "<group>"; };
+		791F0BAE262B56BB0027D3C0 /* Jump.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Jump.sks; sourceTree = "<group>"; };
 		79A58B952628A9F90008D27D /* Fog.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Fog.sks; sourceTree = "<group>"; };
 		79A58B992628B2540008D27D /* LosingEnergy.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LosingEnergy.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -81,6 +85,8 @@
 				791669732624B7B100076D92 /* Burst.sks */,
 				79A58B952628A9F90008D27D /* Fog.sks */,
 				79A58B992628B2540008D27D /* LosingEnergy.sks */,
+				791F0BAB262B4B900027D3C0 /* Collected.sks */,
+				791F0BAE262B56BB0027D3C0 /* Jump.sks */,
 			);
 			path = MockProject;
 			sourceTree = "<group>";
@@ -143,8 +149,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				79084998261F3E5700E0159D /* Main.storyboard in Resources */,
+				791F0BAC262B4B910027D3C0 /* Collected.sks in Resources */,
 				7908498F261F3E5700E0159D /* GameScene.sks in Resources */,
 				79A58B9A2628B2540008D27D /* LosingEnergy.sks in Resources */,
+				791F0BAF262B56BB0027D3C0 /* Jump.sks in Resources */,
 				79A58B962628A9F90008D27D /* Fog.sks in Resources */,
 				790849A6261F422500E0159D /* Aim.sks in Resources */,
 				791669702624B3B400076D92 /* Assets.xcassets in Resources */,

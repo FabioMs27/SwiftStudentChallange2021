@@ -2,7 +2,6 @@ import GameplayKit
 
 class Carried: PlayerState {
     override func didEnter(from previousState: GKState?) {
-        print("You are being carried and loosing life")
         player.burn()
     }
     

@@ -1,6 +1,16 @@
 import GameplayKit
 
 class Collected: PlayerState {
+    
+    public lazy var collectEmitter: SKEmitterNode = { [player] in
+        guard let emitter = SKEmitterNode(fileNamed: "Emitters/Collected") else {
+            fatalError("Couldn't load!")
+        }
+        emitter.targetNode = player.parent
+        player.addChild(emitter)
+        return emitter
+    }()
+    
     override func didEnter(from previousState: GKState?) {
         player.physicsBody?.allContactedBodies()
             .map { $0.node as? SKEmitterNode }
@@ -55,10 +65,10 @@ extension Collected {
         
         //Emitter will go to center of the player while spinning and shrinking
         let goToCenter: SKAction = .move(to: .zero, duration: goToCenterDuration)
-        let finishAnimation: SKAction = .run { [player] in
+        let finishAnimation: SKAction = .run { [player, collectEmitter] in
             player.clampedEnergy += PUSettings.fireEnergy
             emitter.particleBirthRate = 0
-            //TO-DO: Burst from collecting
+            collectEmitter.resetSimulation()
         }
         let waitForParticlesToEnd: SKAction = .wait(forDuration: TimeInterval(emitter.particleLifetime))
         let endEmitter: SKAction = .run { [scene] in
