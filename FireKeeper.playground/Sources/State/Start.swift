@@ -8,6 +8,7 @@ class Start: PlayerState {
     var canStart = false
     
     override func didEnter(from previousState: GKState?) {
+        MusicManager.shared.playMusic()
         startIntro()
     }
     

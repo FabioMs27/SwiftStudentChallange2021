@@ -69,6 +69,7 @@ extension Collected {
             player.clampedEnergy += PUSettings.fireEnergy
             emitter.particleBirthRate = 0
             collectEmitter.resetSimulation()
+            MusicManager.shared.playCollectable()
         }
         let waitForParticlesToEnd: SKAction = .wait(forDuration: TimeInterval(emitter.particleLifetime))
         let endEmitter: SKAction = .run { [scene] in
