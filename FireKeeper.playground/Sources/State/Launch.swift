@@ -40,6 +40,7 @@ class Launch: PlayerState {
     override func isValidNextState(_ stateClass: AnyClass) -> Bool {
         stateClass is Falling.Type ||
             stateClass is Collected.Type ||
-            stateClass is Aiming.Type
+            stateClass is Aiming.Type ||
+            stateClass is Finished.Type
     }
 }

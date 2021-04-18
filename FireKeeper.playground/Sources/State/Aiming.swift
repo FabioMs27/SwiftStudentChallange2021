@@ -7,7 +7,7 @@ class Aiming: PlayerState {
     override func didEnter(from previousState: GKState?) {
         if let state = previousState,
            !state.isMember(of: Carried.self) {
-            slowMotion(duration: 0.5, from: 1, to: 0.2)
+            slowMotion(duration: 0.5, from: 1, to: 0.1)
         }
         aim.removeAllActions()
         let fadeAction: SKAction = .fadeIn(withDuration: 0.2)

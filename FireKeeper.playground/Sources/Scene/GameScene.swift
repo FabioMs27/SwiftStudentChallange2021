@@ -14,10 +14,8 @@ public class GameScene: SKScene {
             Collected(self), Falling(self),
             Start(self)
         ])
-        stateMachine.enter(Start.self)
         player.stateMachine = stateMachine
-        player.position = .zero
-        player.fireEmitter.targetNode = self
+        player.position.y = Metrics.screenSize.height
         player.burnEmitter.targetNode = self
         return player
     }()
@@ -38,7 +36,7 @@ public class GameScene: SKScene {
         }
         emitter.particlePositionRange = CGVector(
             dx: Metrics.screenSize.width,
-            dy: 0
+            dy: Metrics.screenSize.height
         )
         emitter.particlePosition.y = Metrics.screenSize.height * 0.8
         emitter.advanceSimulationTime(5)
@@ -67,6 +65,7 @@ public class GameScene: SKScene {
         backgroundColor = .black
         setupNodes()
         aim.position = .zero
+        player.enter(state: .start)
     }
     
     public override init(size: CGSize) {

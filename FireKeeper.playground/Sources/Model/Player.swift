@@ -4,7 +4,7 @@ import GameplayKit
 public class Player: SKNode {
     
     public var stateMachine: GKStateMachine?
-    public let force: CGFloat = 30
+    public let force: CGFloat = 32
     public let maxEnergy: CGFloat = 100
     public let launchEnergy: CGFloat = 5
     public var launchAngle: CGFloat = 0
@@ -55,11 +55,16 @@ public class Player: SKNode {
         return lightNode
     }()
     
+    public lazy var finalStar: SKSpriteNode = {
+        let node = SKSpriteNode(imageNamed: "Emitters/bokeh.png")
+        addChild(node)
+        return node
+    }()
+    
     private var burningRate = CGFloat()
     
     public override init() {
         super.init()
-        addPhysics()
         addChild(fireEmitter)
         addChild(burnEmitter)
         addChild(fireLight)
@@ -70,7 +75,7 @@ public class Player: SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func addPhysics() {
+    public func addPhysics() {
         let physicsBody = SKPhysicsBody(circleOfRadius: 15)
         physicsBody.isDynamic = true
         physicsBody.affectedByGravity = true
