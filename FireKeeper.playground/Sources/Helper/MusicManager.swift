@@ -41,8 +41,6 @@ public class MusicManager {
         return audio
     }()
     
-    
-    //Initializer
     private init() { }
     
     public func playMusic() {

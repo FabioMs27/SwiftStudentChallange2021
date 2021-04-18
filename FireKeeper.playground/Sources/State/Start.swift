@@ -25,9 +25,11 @@ class Start: PlayerState {
 
 extension Start {
     func startIntro() {
+        let waitNarrator: SKAction = .wait(forDuration: 4)
         let goToCenterAction: SKAction = .move(to: .zero, duration: 5)
         let addConfig: SKAction = .run(configGame)
         player.run(.sequence([
+            waitNarrator,
             goToCenterAction,
             addConfig
         ]))
