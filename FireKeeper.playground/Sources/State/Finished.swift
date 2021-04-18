@@ -2,6 +2,7 @@ import GameplayKit
 
 class Finished: PlayerState {
     override func didEnter(from previousState: GKState?) {
+        MusicManager.shared.playAudio2()
         finishGame()
     }
     

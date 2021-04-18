@@ -19,9 +19,28 @@ public class MusicManager {
               let sound = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: path)) else {
             fatalError("Couldn't load music!")
         }
-        sound.volume = 0.1
+        sound.volume = 0.4
         return sound
     }()
+    
+    private var dontGiveUp: AVAudioPlayer = {
+        guard let path = Bundle.main.path(forResource: "Audio/DontGiveUp", ofType: "m4a"),
+              let audio = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: path)) else {
+            fatalError("Couldn't load music!")
+        }
+        audio.volume = 0.8
+        return audio
+    }()
+    
+    private var shine: AVAudioPlayer = {
+        guard let path = Bundle.main.path(forResource: "Audio/Shine", ofType: "m4a"),
+              let audio = try? AVAudioPlayer(contentsOf: URL(fileURLWithPath: path)) else {
+            fatalError("Couldn't load music!")
+        }
+        audio.volume = 0.8
+        return audio
+    }()
+    
     
     //Initializer
     private init() { }
@@ -33,5 +52,14 @@ public class MusicManager {
     public func playCollectable() {
         effectCollectable.prepareToPlay()
         effectCollectable.play()
+    }
+    
+    public func playAudio1() {
+        dontGiveUp.play()
+    }
+    
+    public func playAudio2() {
+        dontGiveUp.stop()
+        shine.play()
     }
 }
