@@ -1,6 +1,15 @@
 import GameplayKit
 
 class Launch: PlayerState {
+    public lazy var launchEmitter: SKEmitterNode = { [player] in
+        guard let emitter = SKEmitterNode(fileNamed: "Emitters/Jump.sks") else {
+            fatalError("Couldn't load!")
+        }
+        emitter.targetNode = player.parent
+        player.addChild(emitter)
+        return emitter
+    }()
+    
     var force: CGFloat {
         player.force
     }
@@ -20,7 +29,8 @@ class Launch: PlayerState {
         let yForce = -force * cos(angle)
         player.physicsBody?.applyImpulse(CGVector(dx: xForce, dy: yForce))
         player.energy -= player.launchEnergy
-        
+        launchEmitter.particleColor = player.fireEmitter.particleColor
+        launchEmitter.resetSimulation()
         let waitForLaunch: SKAction = .wait(forDuration: launchCoolDown)
         player.run(waitForLaunch) { [player] in
             player.enter(state: .falling)
@@ -30,6 +40,7 @@ class Launch: PlayerState {
     override func isValidNextState(_ stateClass: AnyClass) -> Bool {
         stateClass is Falling.Type ||
             stateClass is Collected.Type ||
-            stateClass is Aiming.Type
+            stateClass is Aiming.Type ||
+            stateClass is Finished.Type
     }
 }

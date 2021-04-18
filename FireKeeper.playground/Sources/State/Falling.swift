@@ -9,6 +9,7 @@ class Falling: PlayerState {
     override func isValidNextState(_ stateClass: AnyClass) -> Bool {
         stateClass is Aiming.Type ||
             stateClass is Collected.Type ||
-            stateClass is Carried.Type
+            stateClass is Carried.Type ||
+            stateClass is Finished.Type
     }
 }

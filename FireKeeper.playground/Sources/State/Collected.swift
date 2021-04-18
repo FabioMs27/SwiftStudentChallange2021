@@ -1,6 +1,16 @@
 import GameplayKit
 
 class Collected: PlayerState {
+    
+    public lazy var collectEmitter: SKEmitterNode = { [player] in
+        guard let emitter = SKEmitterNode(fileNamed: "Emitters/Collected") else {
+            fatalError("Couldn't load!")
+        }
+        emitter.targetNode = player.parent
+        player.addChild(emitter)
+        return emitter
+    }()
+    
     override func didEnter(from previousState: GKState?) {
         player.physicsBody?.allContactedBodies()
             .map { $0.node as? SKEmitterNode }
@@ -54,22 +64,23 @@ extension Collected {
         let goToSpinningNodeSequence: SKAction = .sequence([goToSpinningNode, enterSpinningNode])
         
         //Emitter will go to center of the player while spinning and shrinking
-        let scaleAction: SKAction = .scale(to: 0, duration: goToCenterDuration)
         let goToCenter: SKAction = .move(to: .zero, duration: goToCenterDuration)
-        let finishAnimation: SKAction = .run { [player] in
+        let finishAnimation: SKAction = .run { [player, collectEmitter] in
             player.clampedEnergy += PUSettings.fireEnergy
-            //TO-DO: Burst from collecting
+            emitter.particleBirthRate = 0
+            collectEmitter.resetSimulation()
+            MusicManager.shared.playCollectable()
         }
         let waitForParticlesToEnd: SKAction = .wait(forDuration: TimeInterval(emitter.particleLifetime))
         let endEmitter: SKAction = .run { [scene] in
+            emitter.targetNode = nil
             emitter.removeFromParent()
             emitter.removeAllActions()
             scene.powerUpSpawner.powerUpStack.append(emitter)
             spinningNode.removeAllActions()
             spinningNode.removeFromParent()
         }
-        let goToCenterGroup: SKAction = .group([scaleAction, goToCenter])
-        let goToCenterSequence: SKAction = .sequence([goToCenterGroup,
+        let goToCenterSequence: SKAction = .sequence([goToCenter,
                                                       finishAnimation,
                                                       waitForParticlesToEnd,
                                                       endEmitter])

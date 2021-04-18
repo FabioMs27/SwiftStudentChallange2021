@@ -13,6 +13,7 @@ public class Aim: SKNode {
         }
         return emitter
     }()
+    
     public var initialPos: CGPoint = .zero
     public var currentPos: CGPoint = .zero {
         didSet { updateAimingTrail() }

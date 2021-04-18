@@ -2,10 +2,10 @@ import SpriteKit
 
 public enum PUSettings {
     static let stackMax = 5
-    static let coolDownTime: TimeInterval = 4
-    static let maxOnScreen = 2
+    static let coolDownTime: TimeInterval = 3
+    static let maxOnScreen = 3
     static let fallSpeed: TimeInterval = 10
-    static let fireEnergy: CGFloat = 90
+    static let fireEnergy: CGFloat = 25
 }
 
 public class PowerUpSpawn: SKNode {
@@ -19,7 +19,6 @@ public class PowerUpSpawn: SKNode {
     
     public override init() {
         super.init()
-        setUpBehavior()
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -46,7 +45,7 @@ public class PowerUpSpawn: SKNode {
         return physicsBody
     }
     
-    private func setUpBehavior() {
+    public func setUpBehavior() {
         let yPos = Metrics.screenSize.height
         let xDistance = Metrics.screenSize.width * 0.4
         
@@ -66,9 +65,9 @@ public class PowerUpSpawn: SKNode {
         let powerUp = powerUpStack.removeFirst()
         powerUp.position = point
         powerUp.targetNode = parent
+        powerUp.particleBirthRate = 50
         let finalPos = CGVector(dx: 0, dy: -Metrics.screenSize.height * 2)
         let fallAction: SKAction = .move(by: finalPos, duration: PUSettings.fallSpeed)
-        powerUp.setScale(1)
         powerUp.isHidden = false
         powerUp.physicsBody = getPhysics()
         addChild(powerUp)
