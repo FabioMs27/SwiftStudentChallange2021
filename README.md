@@ -1,6 +1,6 @@
-# Firekeeper (Swift Student Challange 2021) - [Accepted]
+# Firekeeper (Swift Student Challenge 2021) - [Accepted]
 
-My Swift Student Challange 2021 project. I was one of the participants who won the challange.
+My Swift Student Challenge 2021 project. I was one of the participants who won the challange.
 
 
 In this project I wanted to make you experience as best as possible (in 3 minutes) the situation I am going through at the moment. I am at an age of struggle, but one that everyone has to go through. I am a young adult. Young enough to be a begginner but not young enough to slack off and be fine with it. Yet most notably, I am fighting to stablish myself as an adult.
